@@ -1,0 +1,36 @@
+## Direct prediction: inductance sequence → position (no AR feedback)
+data:
+  csv_path: "../gp_fit_2d/trajectories/all_trajectories.csv"
+  trajectories_dir: "data/trajectories_2d"
+  window_size: 10
+  stride: 1
+  subsample_factor: 1
+  test_size: 0.2
+  val_size: 0.1
+  batch_size: 256
+  num_workers: 4
+
+model:
+  model_type: "transformer"
+  d_model: 128
+  nhead: 8
+  num_layers: 5
+  dim_feedforward: 512
+  fc_dims: [256, 128]
+  dropout: 0.15
+  output_dim: 2
+
+training:
+  epochs: 200
+  lr: 0.0003
+  weight_decay: 0.0001
+  patience: 30
+  loss: "huber"
+  scheduler: "plateau"
+  scheduler_factor: 0.5
+  scheduler_patience: 10
+  grad_clip: 1.0
+
+system:
+  seed: 42
+  output_dir: "output"

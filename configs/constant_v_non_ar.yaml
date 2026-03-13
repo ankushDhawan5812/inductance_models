@@ -1,0 +1,38 @@
+# Non-AR causal transformer on constant-velocity trajectory data.
+# Input is only inductance (no previous positions), avoids compounding error.
+data:
+  csv_path: "../gp_fit_2d/trajectories/constant_v_traj.csv"
+  trajectories_dir: "data/constant_v_traj"
+  window_size: 10
+  stride: 1
+  subsample_factor: 1
+  test_size: 0.2
+  val_size: 0.1
+  batch_size: 512
+  num_workers: 4
+
+model:
+  model_type: "causal_transformer"
+  d_model: 64
+  nhead: 4
+  num_layers: 3
+  dim_feedforward: 256
+  encoder_dims: [64]
+  decoder_dims: [128, 64]
+  dropout: 0.1
+  output_dim: 2
+
+training:
+  epochs: 100
+  lr: 0.0003
+  weight_decay: 0.0001
+  patience: 20
+  loss: "mse"
+  scheduler: "plateau"
+  scheduler_factor: 0.5
+  scheduler_patience: 8
+  grad_clip: 1.0
+
+system:
+  seed: 42
+  output_dir: "output"

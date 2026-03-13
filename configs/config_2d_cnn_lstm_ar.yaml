@@ -1,0 +1,39 @@
+data:
+  csv_path: "../gp_fit_2d/trajectories/all_trajectories.csv"
+  trajectories_dir: "data/trajectories_2d"
+  window_size: 50
+  stride: 1
+  subsample_factor: 1
+  test_size: 0.2
+  val_size: 0.1
+  batch_size: 512
+  num_workers: 4
+
+model:
+  model_type: "cnn_lstm_ar"
+  conv_channels: [32, 64, 128]
+  kernel_sizes: [7, 5, 3]
+  hidden_size: 128
+  num_layers: 2
+  fc_dims: [128, 64]
+  dropout: 0.2
+  bidirectional: false
+  output_dim: 2
+
+training:
+  epochs: 100
+  lr: 0.0003
+  weight_decay: 0.0001
+  patience: 20
+  loss: "mse"
+  scheduler: "plateau"
+  scheduler_factor: 0.5
+  scheduler_patience: 8
+  grad_clip: 1.0
+  tf_ratio_start: 1.0
+  tf_ratio_end: 0.0
+  tf_decay_epochs: 50
+
+system:
+  seed: 42
+  output_dir: "output"

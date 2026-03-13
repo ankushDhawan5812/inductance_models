@@ -1,1 +1,4 @@
-output/*
+data/
+output/
+model_archs/
+__pycache__/
